@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node -e \"const fs=require('fs');const p='dist/server/wrangler.json';if(fs.existsSync(p)){const c=JSON.parse(fs.readFileSync(p,'utf8'));if(c.bindings)c.bindings=c.bindings.filter(b=>b.name!=='ASSETS');fs.writeFileSync(p,JSON.stringify(c,null,2))}\"",
+    "build": "astro build && node scripts/fix-wrangler.mjs",
     "preview": "astro preview"
   },
   "dependencies": {
