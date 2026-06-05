@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import { sanityClient } from '../../lib/sanity'
 import { getAllPostsQuery } from '../../lib/queries'
+import type { Post } from '../../types/blog'
 
 const posts = await sanityClient.fetch(getAllPostsQuery)
 ---
@@ -14,7 +15,7 @@ const posts = await sanityClient.fetch(getAllPostsQuery)
       <p class="text-gray-500">No posts yet. Check back soon.</p>
     ) : (
       <div class="grid md:grid-cols-2 gap-6">
-        {posts.map((post: any) => (
+        {posts.map((post: Post) => (
           <a href={`/blog/${post.slug.current}`} class="border p-4 rounded-lg hover:shadow">
             <h2 class="text-xl font-semibold mb-2">{post.title}</h2>
             <p class="text-sm text-gray-500 mb-2">
