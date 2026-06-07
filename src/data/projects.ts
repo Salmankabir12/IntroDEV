@@ -26,5 +26,12 @@ export const projects = [
     description: "Machine learning web app that predicts final exam marks based on study habits and previous performance.",
     techStack: ["Python", "FastAPI", "scikit-learn", "pandas"],
     content: "A linear regression model trained on student data predicts final marks from hours studied, attendance percentage, and previous exam scores. Try it live below."
+  },
+  {
+    slug: "database-management",
+    title: "Healthcare Database Management System",
+    description: "Full-stack healthcare management system with PHP, MySQL, and Bootstrap featuring appointment booking, queue management, and medical records.",
+    techStack: ["PHP", "MySQL", "Bootstrap", "JavaScript"],
+    content: "A web-based healthcare management system with patient/doctor/admin portals. Features include token-based queue management, appointment booking with conflict detection, medical history tracking, and role-based dashboards. Built with prepared statements for SQL injection prevention and bcrypt password hashing. View on GitHub at github.com/Salmankabir12/Database-Management."
   }
 ];
