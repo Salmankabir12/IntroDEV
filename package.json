@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node -e \"require('fs').writeFileSync('dist/_worker.js','import handler from \\\"./server/entry.mjs\\\"\\nexport default handler\\n')\" && rm -f dist/server/wrangler.json dist/server/.prerender/wrangler.json && rm -rf .wrangler",
+    "build": "astro build && node -e \"const fs=require('fs'),p=require('path');function cp(a,b){fs.mkdirSync(p.dirname(b),{recursive:true});fs.cpSync(a,b,{recursive:true})} fs.writeFileSync('dist/_worker.js','import handler from \\\"./server/entry.mjs\\\"\\nexport default handler\\n');cp('dist/client/_astro','dist/_astro');\" && rm -f dist/server/wrangler.json dist/server/.prerender/wrangler.json && rm -rf dist/client .wrangler",
     "preview": "astro preview"
   },
   "dependencies": {
