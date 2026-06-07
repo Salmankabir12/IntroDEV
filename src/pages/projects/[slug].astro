@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import StudentPredictor from '../../components/StudentPredictor';
 import { projects } from '../../data/projects';
 
 export async function getStaticPaths() {
@@ -21,6 +22,8 @@ const { project } = Astro.props;
       ))}
     </div>
 
-    <p class="text-(--text-secondary) leading-relaxed">{project.content}</p>
+    <p class="text-(--text-secondary) leading-relaxed mb-10">{project.content}</p>
+
+    {project.slug === 'ai-student-predictor' && <StudentPredictor client:load />}
   </article>
 </BaseLayout>
