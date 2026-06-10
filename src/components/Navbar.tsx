@@ -15,7 +15,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 w-full bg-(--surface-elevated)/80 backdrop-blur border-b border-(--border)">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <a href="/" className="text-xl font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent">
-          Salman Kabir
+          Salman kabir
         </a>
 
         <div className="flex items-center gap-6">
