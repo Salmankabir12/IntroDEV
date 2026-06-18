@@ -2,13 +2,16 @@
 
 Personal portfolio site built with [Astro](https://astro.build), deployed on [Cloudflare Pages](https://pages.cloudflare.com).
 
+Built with a focus on performance and minimalism. Features include a predictive ML model for student exam scores, project showcase, and blog via Sanity CMS.
+
 ## Stack
 
-- **Framework** — Astro (SSR mode)
-- **UI** — React, Tailwind CSS v4
-- **CMS** — Sanity (blog content)
-- **Database** — Cloudflare D1 (contact form)
-- **Email** — Resend
+- **Framework** — Astro v6 (SSR mode)
+- **UI** — React 19, Tailwind CSS v4
+- **CMS** — Sanity (project & blog content)
+- **Database** — Cloudflare D1 (contact form submissions)
+- **Email** — Resend (transactional emails)
+- **ML** — Python, scikit-learn (student score predictor)
 - **Hosting** — Cloudflare Pages
 
 ## Development
