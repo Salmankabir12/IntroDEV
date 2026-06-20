@@ -1,0 +1,117 @@
+---
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+import { sanityClient } from '../../../../lib/sanity';
+import { getPostBySlugQuery } from '../../../../lib/queries';
+
+const { slug } = Astro.params;
+const post = await sanityClient.fetch(getPostBySlugQuery, { slug });
+
+if (!post) {
+  return Astro.redirect('/admin/posts');
+}
+---
+
+<AdminLayout title={`Edit: ${post.title}`}>
+  <div class="max-w-3xl">
+    <h1 class="text-2xl font-bold mb-6">Edit Post</h1>
+
+    <form id="post-form" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1">Title</label>
+        <input
+          type="text" name="title" required value={post.title}
+          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Slug</label>
+        <input
+          type="text" name="slug" required value={post.slug.current}
+          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Excerpt</label>
+        <textarea
+          name="excerpt" rows="2" maxlength="200"
+          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >{post.excerpt || ''}</textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Tags</label>
+        <input
+          type="text" name="tags" value={post.tags?.join(', ') || ''}
+          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-(--text-muted)"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Body (Portable Text JSON)</label>
+        <textarea
+          name="body" rows="12" required
+          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono text-xs"
+        >{JSON.stringify(post.body, null, 2)}</textarea>
+      </div>
+
+      <div id="status" class="text-sm hidden"></div>
+
+      <div class="flex gap-3">
+        <button
+          type="submit"
+          class="px-6 py-3 rounded-lg bg-gradient-to-r from-indigo-500 to-cyan-500 hover:opacity-90 transition text-sm font-medium"
+        >
+          Save Changes
+        </button>
+        <a
+          href="/admin/posts"
+          class="px-6 py-3 rounded-lg border border-(--border) hover:bg-(--surface-raised) transition text-sm"
+        >
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('post-form');
+    const status = document.getElementById('status');
+    const currentSlug = new URL(window.location.href).pathname.split('/').pop();
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.className = 'text-sm';
+      status.textContent = 'Saving...';
+
+      const tags = form.tags.value
+        ? form.tags.value.split(',').map((t) => t.trim()).filter(Boolean)
+        : [];
+
+      const body = JSON.parse(form.body.value);
+
+      const res = await fetch(`/api/admin/posts/${currentSlug}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: form.title.value,
+          slug: form.slug.value,
+          excerpt: form.excerpt.value,
+          tags,
+          body,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        status.className = 'text-sm text-green-500';
+        status.textContent = 'Saved! Redirecting...';
+        setTimeout(() => { window.location.href = '/admin/posts'; }, 1000);
+      } else {
+        status.className = 'text-sm text-red-500';
+        status.textContent = data.error || 'Failed to save';
+      }
+    });
+  </script>
+</AdminLayout>

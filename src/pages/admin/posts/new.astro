@@ -1,0 +1,132 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { sanityClient } from '../../../lib/sanity';
+
+const authors = await sanityClient.fetch(`*[_type == "author"]{_id, name}`);
+const categories = await sanityClient.fetch(`*[_type == "category"]{_id, title}`);
+---
+
+<AdminLayout title="New Post">
+  <div class="max-w-3xl">
+    <h1 class="text-2xl font-bold mb-6">New Post</h1>
+
+    <form id="post-form" class="space-y-4" method="POST" action="/api/admin/posts">
+      <div>
+        <label class="block text-sm font-medium mb-1">Title</label>
+        <input
+          type="text" name="title" required
+          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Slug</label>
+        <input
+          type="text" name="slug" required
+          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+        <p class="text-xs text-(--text-muted) mt-1">URL-friendly identifier (e.g., "my-new-post")</p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Excerpt</label>
+        <textarea
+          name="excerpt" rows="2" maxlength="200"
+          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        ></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Tags</label>
+        <input
+          type="text" name="tags" placeholder="Comma separated (e.g., Astro, Sanity, TypeScript)"
+          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-(--text-muted)"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Published At</label>
+        <input
+          type="datetime-local" name="publishedAt"
+          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Body (Portable Text JSON)</label>
+        <textarea
+          name="body" rows="12" required
+          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono text-xs"
+          placeholder='[{"_type":"block","children":[{"_type":"span","text":"Your content here..."}]}]'
+        ></textarea>
+      </div>
+
+      <div id="status" class="text-sm hidden"></div>
+
+      <div class="flex gap-3">
+        <button
+          type="submit"
+          class="px-6 py-3 rounded-lg bg-gradient-to-r from-indigo-500 to-cyan-500 hover:opacity-90 transition text-sm font-medium"
+        >
+          Create Post
+        </button>
+        <a
+          href="/admin/posts"
+          class="px-6 py-3 rounded-lg border border-(--border) hover:bg-(--surface-raised) transition text-sm"
+        >
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('post-form');
+    const status = document.getElementById('status');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.className = 'text-sm';
+      status.textContent = 'Creating...';
+
+      const tags = form.tags.value
+        ? form.tags.value.split(',').map((t: string) => t.trim()).filter(Boolean)
+        : [];
+
+      const body = (() => {
+        try {
+          return JSON.parse(form.body.value);
+        } catch {
+          return [{_type: 'block', children: [{_type: 'span', text: form.body.value}]}];
+        }
+      })();
+
+      const payload: Record<string, any> = {
+        title: form.title.value,
+        slug: form.slug.value,
+        excerpt: form.excerpt.value,
+        tags,
+        body,
+      };
+
+      if (form.publishedAt.value) {
+        payload.publishedAt = new Date(form.publishedAt.value).toISOString();
+      }
+
+      const res = await fetch('/api/admin/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        status.className = 'text-sm text-green-500';
+        status.textContent = 'Post created! Redirecting...';
+        setTimeout(() => { window.location.href = '/admin/posts'; }, 1000);
+      } else {
+        status.className = 'text-sm text-red-500';
+        status.textContent = data.error || 'Failed to create post';
+      }
+    });
+  </script>
+</AdminLayout>

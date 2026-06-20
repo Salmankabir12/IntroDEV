@@ -1,0 +1,85 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { sanityClient } from '../../lib/sanity';
+import { getAllPostsQuery } from '../../lib/queries';
+import { projects } from '../../data/projects';
+import { env } from 'cloudflare:workers';
+
+const posts = await sanityClient.fetch(getAllPostsQuery);
+const postCount = posts.length;
+const projectCount = projects.length;
+
+let contactCount = 0;
+let recentContacts: { name: string; email: string; created_at: string }[] = [];
+try {
+  const db = env.DB;
+  if (db) {
+    const countResult = await db.prepare('SELECT COUNT(*) as count FROM contacts').first<{ count: number }>();
+    contactCount = countResult?.count ?? 0;
+    const contactsResult = await db
+      .prepare('SELECT name, email, created_at FROM contacts ORDER BY created_at DESC LIMIT 5')
+      .all<{ name: string; email: string; created_at: string }>();
+    recentContacts = contactsResult.results ?? [];
+  }
+} catch (e) {
+  console.error('D1 query error:', e);
+}
+
+const recentPosts = posts.slice(0, 3);
+---
+
+<AdminLayout title="Dashboard">
+  <h1 class="text-2xl font-bold mb-6">Dashboard</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="p-6 bg-(--surface-elevated) border border-(--border) rounded-xl">
+      <p class="text-sm text-(--text-muted) mb-1">Total Posts</p>
+      <p class="text-3xl font-bold">{postCount}</p>
+    </div>
+    <div class="p-6 bg-(--surface-elevated) border border-(--border) rounded-xl">
+      <p class="text-sm text-(--text-muted) mb-1">Total Projects</p>
+      <p class="text-3xl font-bold">{projectCount}</p>
+    </div>
+    <div class="p-6 bg-(--surface-elevated) border border-(--border) rounded-xl">
+      <p class="text-sm text-(--text-muted) mb-1">Contact Messages</p>
+      <p class="text-3xl font-bold">{contactCount}</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="bg-(--surface-elevated) border border-(--border) rounded-xl p-6">
+      <h2 class="text-lg font-semibold mb-4">Recent Posts</h2>
+      {recentPosts.length === 0 ? (
+        <p class="text-sm text-(--text-muted)">No posts yet.</p>
+      ) : (
+        <ul class="space-y-3">
+          {recentPosts.map((post: any) => (
+            <li class="flex items-center justify-between">
+              <span class="text-sm truncate">{post.title}</span>
+              <span class="text-xs text-(--text-muted) shrink-0 ml-2">
+                {new Date(post.publishedAt).toLocaleDateString()}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    <div class="bg-(--surface-elevated) border border-(--border) rounded-xl p-6">
+      <h2 class="text-lg font-semibold mb-4">Recent Contacts</h2>
+      {recentContacts.length === 0 ? (
+        <p class="text-sm text-(--text-muted)">No contact submissions yet.</p>
+      ) : (
+        <ul class="space-y-3">
+          {recentContacts.map((c) => (
+            <li class="text-sm">
+              <span class="font-medium">{c.name}</span>
+              <span class="text-(--text-muted)"> — {c.email}</span>
+              <span class="text-xs text-(--text-muted) block">{c.created_at}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
+</AdminLayout>

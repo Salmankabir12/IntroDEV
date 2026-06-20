@@ -55,6 +55,10 @@ FROM_EMAIL
 
 Sanity client has fallback hardcoded values (`projectId: '2hf9u675'`, `dataset: 'production'`).
 
+Admin panel (in `src/pages/admin/`) needs two more secrets on Cloudflare:
+- `ADMIN_PASSWORD` — login password
+- `ADMIN_SECRET` — HMAC signing key (falls back to `SANITY_PROJECT_ID` then `'fallback-secret'` if unset)
+
 ## Resend
 
 The `resend` npm dependency exists but is **never imported**. Contact form uses raw `fetch` to `https://api.resend.com/emails`.

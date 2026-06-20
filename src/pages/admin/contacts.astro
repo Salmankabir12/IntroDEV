@@ -1,0 +1,51 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { env } from 'cloudflare:workers';
+
+let contacts: { id: number; name: string; email: string; message: string; created_at: string }[] = [];
+let error: string | null = null;
+
+try {
+  const db = env.DB;
+  if (!db) {
+    error = 'D1 database binding not available';
+  } else {
+    const result = await db
+      .prepare('SELECT id, name, email, message, created_at FROM contacts ORDER BY created_at DESC')
+      .all<{ id: number; name: string; email: string; message: string; created_at: string }>();
+    contacts = result.results ?? [];
+  }
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Failed to fetch contacts';
+  console.error('Contacts query error:', e);
+}
+---
+
+<AdminLayout title="Contacts">
+  <h1 class="text-2xl font-bold mb-6">Contact Messages</h1>
+
+  {error && (
+    <div class="p-4 mb-6 bg-red-500/10 border border-red-500/30 rounded-lg text-sm text-red-500">
+      {error}
+    </div>
+  )}
+
+  {contacts.length === 0 ? (
+    <p class="text-(--text-muted)">No messages yet.</p>
+  ) : (
+    <div class="space-y-4">
+      {contacts.map((c) => (
+        <div class="p-5 bg-(--surface-elevated) border border-(--border) rounded-xl">
+          <div class="flex items-start justify-between mb-2">
+            <div>
+              <span class="font-medium">{c.name}</span>
+              <span class="text-(--text-muted) text-sm ml-2">{c.email}</span>
+            </div>
+            <span class="text-xs text-(--text-muted) shrink-0 ml-4">{c.created_at}</span>
+          </div>
+          <p class="text-sm text-(--text-secondary) whitespace-pre-wrap">{c.message}</p>
+        </div>
+      ))}
+    </div>
+  )}
+</AdminLayout>

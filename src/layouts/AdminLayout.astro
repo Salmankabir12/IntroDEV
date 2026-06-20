@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import { env } from 'cloudflare:workers';
+import { getSessionCookie, verifySession } from '../lib/admin';
+
+const secret = env.ADMIN_SECRET || env.SANITY_PROJECT_ID || 'fallback-secret';
+const sessionToken = getSessionCookie(Astro.request);
+const authenticated = sessionToken ? await verifySession(sessionToken, secret) : false;
+
+if (!authenticated) {
+  return Astro.redirect('/admin/login');
+}
+
+const currentPath = Astro.url.pathname;
+const { title = 'Admin' } = Astro.props;
+
+const navItems = [
+  { name: 'Dashboard', href: '/admin/dashboard' },
+  { name: 'Posts', href: '/admin/posts' },
+  { name: 'Contacts', href: '/admin/contacts' },
+  { name: 'Projects', href: '/admin/projects' },
+];
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — Admin</title>
+    <script>
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body class="min-h-screen flex bg-(--surface) text-(--text-primary)">
+    <aside class="w-60 min-h-screen bg-(--surface-elevated) border-r border-(--border) flex flex-col shrink-0">
+      <div class="p-5 border-b border-(--border)">
+        <a href="/admin/dashboard" class="text-lg font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent">
+          KANSMODE
+        </a>
+        <p class="text-xs text-(--text-muted) mt-1">Admin Panel</p>
+      </div>
+      <nav class="flex-1 p-4 space-y-1">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class={`block px-4 py-2.5 rounded-lg text-sm font-medium transition ${
+              currentPath === item.href
+                ? 'bg-(--tag) text-(--text-primary)'
+                : 'text-(--text-muted) hover:text-(--text-primary) hover:bg-(--surface-raised)'
+            }`}
+          >
+            {item.name}
+          </a>
+        ))}
+      </nav>
+      <div class="p-4 border-t border-(--border)">
+        <a href="/" class="block text-xs text-(--text-muted) hover:text-(--text-primary) mb-2">← Back to site</a>
+        <a href="/admin/logout" class="block text-xs text-red-500 hover:text-red-400">Logout</a>
+      </div>
+    </aside>
+    <main class="flex-1 p-8">
+      <slot />
+    </main>
+  </body>
+</html>

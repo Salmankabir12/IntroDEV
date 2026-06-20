@@ -1,0 +1,59 @@
+---
+import '../../styles/global.css';
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Login — Salman Kabir</title>
+    <script>
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body class="min-h-screen flex items-center justify-center bg-(--surface) text-(--text-primary)">
+    <div class="w-full max-w-sm p-8 bg-(--surface-elevated) border border-(--border) rounded-xl">
+      <h1 class="text-2xl font-bold mb-6 text-center">Admin Login</h1>
+      <form id="login-form" class="space-y-4">
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-(--text-muted)"
+        />
+        <button
+          type="submit"
+          class="w-full py-3 rounded-lg bg-gradient-to-r from-indigo-500 to-cyan-500 hover:opacity-90 transition"
+        >
+          Sign In
+        </button>
+        <p id="error" class="text-sm text-red-500 text-center hidden"></p>
+      </form>
+    </div>
+    <script>
+      const form = document.getElementById('login-form');
+      const error = document.getElementById('error');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        error.classList.add('hidden');
+        const password = form.password.value;
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password }),
+        });
+        if (res.ok) {
+          window.location.href = '/admin/dashboard';
+        } else {
+          const data = await res.json();
+          error.textContent = data.error || 'Login failed';
+          error.classList.remove('hidden');
+        }
+      });
+    </script>
+  </body>
+</html>
