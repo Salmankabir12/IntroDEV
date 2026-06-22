@@ -47,5 +47,12 @@ export const projects = [
     description: "A premium garments buying house website with animated hero particles, 3D globe visualization, and GPU-adaptive Three.js effects — deployed on Cloudflare Pages.",
     techStack: ["Astro", "Svelte", "React", "Three.js", "Framer Motion", "Tailwind", "Sanity", "Cloudflare"],
     content: "A full-featured corporate website for Kans Mode International, a garments buying house. Features include a ParticleScene animated hero, 3D SVG globe visualization with scroll-driven rotation, FloatingLines WebGL shader background, GPU-tier-adaptive Three.js rendering, Framer Motion bento grid, Svelte scroll-triggered animations (FadeIn, Stagger, Counter, TextReveal, Parallax), Sanity CMS for blog and product catalog, and Cloudflare D1 for contact form storage. Built with Astro v6 SSR on Cloudflare Pages. View on GitHub at github.com/Salmankabir12/KANSMODE."
+  },
+  {
+    slug: "nsu-cgpa-calculator",
+    title: "NSU CGPA Calculator",
+    description: "Calculate your semester and cumulative CGPA for North South University. Enter course credits and grades to instantly compute your results.",
+    techStack: ["HTML5", "CSS3", "JavaScript"],
+    content: "A lightweight, client-side CGPA calculator built for North South University students. Features include dynamic course row management (add/remove courses), optional previous CGPA input for cumulative calculation, and the official NSU grading scale (A = 4.0 through F = 0.0). No data is stored — everything runs in your browser. Deployed on GitHub Pages. View on GitHub at github.com/Salmankabir12/NSU-CGPA-Calculator or use it live at salmankabir12.github.io/NSU-CGPA-Calculator."
   }
 ];
