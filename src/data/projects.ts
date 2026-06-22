@@ -62,5 +62,14 @@ export const projects = [
     liveUrl: "https://salmankabir12.github.io/NSU-CGPA-Calculator/",
     githubUrl: "https://github.com/Salmankabir12/NSU-CGPA-Calculator",
     content: "A lightweight, client-side CGPA calculator built for North South University students. Features include dynamic course row management (add/remove courses), optional previous CGPA input for cumulative calculation, and the official NSU grading scale (A = 4.0 through F = 0.0). No data is stored — everything runs in your browser. Deployed on GitHub Pages. View on GitHub at github.com/Salmankabir12/NSU-CGPA-Calculator or use it live at salmankabir12.github.io/NSU-CGPA-Calculator."
+  },
+  {
+    slug: "studyai",
+    title: "StudyAI",
+    description: "AI-powered study platform built with Astro, Cloudflare D1, and Workers AI — featuring AI-driven study assistance and server-side rendering.",
+    techStack: ["Astro", "TypeScript", "React", "Tailwind", "Cloudflare", "D1", "Workers AI"],
+    liveUrl: "https://studyai-bb2.pages.dev",
+    githubUrl: "https://github.com/Salmankabir12/StudyAI",
+    content: "An AI-powered study platform built with Astro on Cloudflare Pages. Features server-side rendering with Cloudflare D1 for database storage and Workers AI for intelligent study assistance. Built with React components, Tailwind CSS, and the Astro framework."
   }
 ];
