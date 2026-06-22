@@ -50,7 +50,7 @@ export const projects = [
     title: "KANSMODE",
     description: "A premium garments buying house website with animated hero particles, 3D globe visualization, and GPU-adaptive Three.js effects — deployed on Cloudflare Pages.",
     techStack: ["Astro", "Svelte", "React", "Three.js", "Framer Motion", "Tailwind", "Sanity", "Cloudflare"],
-    liveUrl: "https://kansmode.com",
+    liveUrl: "https://650d54fe.kansmode-website.pages.dev",
     githubUrl: "https://github.com/Salmankabir12/KANSMODE",
     content: "A full-featured corporate website for Kans Mode International, a garments buying house. Features include a ParticleScene animated hero, 3D SVG globe visualization with scroll-driven rotation, FloatingLines WebGL shader background, GPU-tier-adaptive Three.js rendering, Framer Motion bento grid, Svelte scroll-triggered animations (FadeIn, Stagger, Counter, TextReveal, Parallax), Sanity CMS for blog and product catalog, and Cloudflare D1 for contact form storage. Built with Astro v6 SSR on Cloudflare Pages. View on GitHub at github.com/Salmankabir12/KANSMODE."
   },
