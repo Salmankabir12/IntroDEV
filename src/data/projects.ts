@@ -25,7 +25,7 @@ export const projects = [
     title: "AI Student Predictor",
     description: "Machine learning web app that predicts final exam marks based on study habits and previous performance.",
     techStack: ["Python", "FastAPI", "scikit-learn", "pandas"],
-    liveUrl: "https://ai-student-predictor.pages.dev",
+    liveUrl: "https://ai-student-predictor.pages.dev/signup",
     githubUrl: "https://github.com/Salmankabir12/AI-Student-Predictor",
     content: "A linear regression model trained on student data predicts final marks from hours studied, attendance percentage, and previous exam scores. Try it live below."
   },
