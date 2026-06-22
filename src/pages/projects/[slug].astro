@@ -16,10 +16,23 @@ if (!project) {
       {project.title}
     </h1>
 
-    <div class="flex flex-wrap gap-2 mb-6">
+    <div class="flex flex-wrap gap-2 mb-4">
       {project.techStack.map(t => (
         <span class="px-3 py-1 text-sm bg-(--tag) text-(--tag-text) rounded-full">{t}</span>
       ))}
+    </div>
+
+    <div class="flex flex-wrap gap-3 mb-8">
+      {project.liveUrl && (
+        <a href={project.liveUrl} target="_blank" class="px-4 py-2 text-sm rounded-lg bg-gradient-to-r from-indigo-500 to-cyan-500 hover:opacity-90 transition font-medium">
+          View Live →
+        </a>
+      )}
+      {project.githubUrl && (
+        <a href={project.githubUrl} target="_blank" class="px-4 py-2 text-sm rounded-lg border border-(--border) hover:bg-(--surface-raised) transition font-medium">
+          View on GitHub →
+        </a>
+      )}
     </div>
 
     <p class="text-(--text-secondary) leading-relaxed mb-10">{project.content}</p>

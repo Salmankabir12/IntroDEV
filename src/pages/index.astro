@@ -32,7 +32,11 @@ import { projects } from '../data/projects';
               <span class="text-xs px-2 py-1 bg-(--tag) text-(--tag-text) rounded">{t}</span>
             ))}
           </div>
-          <span class="text-indigo-500">View Project →</span>
+          <div class="flex flex-wrap gap-2">
+            {p.liveUrl && <span class="text-xs px-2 py-1 bg-indigo-500/10 text-indigo-500 rounded">Live</span>}
+            {p.githubUrl && <span class="text-xs px-2 py-1 bg-(--tag) text-(--tag-text) rounded">GitHub</span>}
+          </div>
+          <span class="text-indigo-500 mt-2 inline-block">View Project →</span>
         </a>
       ))}
     </div>
