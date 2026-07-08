@@ -50,7 +50,8 @@ export const projects = [
     title: "Nuxt Storefront",
     description: "A multilingual product review storefront with Nuxt 4, @nuxt/ui v4, and Strapi 5 headless CMS supporting English, Bengali, and French.",
     techStack: ["Nuxt 4", "Vue 3", "TypeScript", "Strapi 5", "@nuxt/ui", "Tailwind CSS", "i18n"],
-    content: "A product review storefront featuring article listings with covers, category browsing, author details, shopping cart, full-text search, and a locale switcher. Strapi 5 backend provides flat API format (no attributes wrapper), with proper populate/filter query encoding. i18n uses prefix_except_default strategy with strict SEO mode. View on GitHub at github.com/Salmankabir12/nuxt-storefront."
+    githubUrl: "https://github.com/Salmankabir12/nuxt-storefront",
+    content: "A product review storefront featuring article listings with covers, category browsing, author details, shopping cart, full-text search, and a locale switcher. Strapi 5 backend provides flat API format (no attributes wrapper), with proper populate/filter query encoding. i18n uses prefix_except_default strategy with strict SEO mode."
   },
   {
     slug: "kansmode",
