@@ -46,6 +46,13 @@ export const projects = [
     content: "A minimal automatic differentiation engine for scalar computations implemented from scratch in Python. Every arithmetic operation builds a directed acyclic graph (DAG) of Value nodes that stores gradients and supports backpropagation through the chain rule. Includes neural network building blocks (Neuron, Layer, MLP), an SGD optimizer, and computational graph visualization with Graphviz. Built to understand what's really happening when you call .backward() in PyTorch. View on GitHub at github.com/Salmankabir12/autodiff."
   },
   {
+    slug: "nuxt-storefront",
+    title: "Nuxt Storefront",
+    description: "A multilingual product review storefront with Nuxt 4, @nuxt/ui v4, and Strapi 5 headless CMS supporting English, Bengali, and French.",
+    techStack: ["Nuxt 4", "Vue 3", "TypeScript", "Strapi 5", "@nuxt/ui", "Tailwind CSS", "i18n"],
+    content: "A product review storefront featuring article listings with covers, category browsing, author details, shopping cart, full-text search, and a locale switcher. Strapi 5 backend provides flat API format (no attributes wrapper), with proper populate/filter query encoding. i18n uses prefix_except_default strategy with strict SEO mode. View on GitHub at github.com/Salmankabir12/nuxt-storefront."
+  },
+  {
     slug: "kansmode",
     title: "KANSMODE",
     description: "A premium garments buying house website with animated hero particles, 3D globe visualization, and GPU-adaptive Three.js effects — deployed on Cloudflare Pages.",
