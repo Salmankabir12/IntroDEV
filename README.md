@@ -2,13 +2,22 @@
 
 Personal portfolio site built with [Astro](https://astro.build), deployed on [Cloudflare Pages](https://pages.cloudflare.com).
 
-Built with a focus on performance and minimalism. Features include a predictive ML model for student exam scores, project showcase, and blog via Sanity CMS.
+**Live site:** https://portfolio-22m.pages.dev
+
+## Design
+
+Editorial, magazine-inspired theme blending references from Ravi Klaassens and Perry Wang:
+
+- **Typography** — Gloock serif for display headlines, Instrument Serif italic for accent words, Inter/system sans for body
+- **Palette** — dark monochrome with a warm gold accent (`#e8b65a`)
+- **Layout** — statement hero, full-width numbered project rows, marquee tech ticker, editorial multi-column footer
+- **Interactions** — scroll-triggered fade-ins, hover overlays, live clock, smooth theme toggle
 
 ## Stack
 
-- **Framework** — Astro v6 (SSR mode)
+- **Framework** — Astro v6 (SSR mode, Cloudflare adapter)
 - **UI** — React 19, Tailwind CSS v4
-- **CMS** — Sanity (project & blog content)
+- **CMS** — Sanity (blog content)
 - **Database** — Cloudflare D1 (contact form submissions)
 - **Email** — Resend (transactional emails)
 - **ML** — Python, scikit-learn (student score predictor)

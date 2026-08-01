@@ -14,21 +14,35 @@ if (!post) {
 ---
 
 <BaseLayout title={post.title}>
-  <article class="max-w-3xl mx-auto py-10">
-    <h1 class="text-3xl font-bold mb-2">{post.title}</h1>
-    <p class="text-sm text-(--text-muted) mb-4">
-      {new Date(post.publishedAt).toLocaleDateString()}
-    </p>
+  <article class="max-w-3xl mx-auto px-6 md:px-10 py-20">
+    <a href="/blog" class="group inline-flex items-center text-xs uppercase tracking-[0.2em] text-(--text-muted) hover:text-(--accent) transition-colors duration-300">
+      <span class="inline-block group-hover:-translate-x-1 transition-transform duration-300">←</span>
+      <span class="ml-2">Writing</span>
+    </a>
 
-    {post.tags && (
-      <div class="flex gap-2 flex-wrap mb-6">
-        {post.tags.map((tag: string) => (
-          <span class="text-xs bg-(--tag) text-(--tag-text) px-2 py-1 rounded">{tag}</span>
-        ))}
-      </div>
-    )}
+    <h1 class="font-display text-4xl md:text-5xl text-(--text-primary) mt-8 mb-4 animate-fade-in-up">
+      {post.title}
+    </h1>
 
-    <div class="prose prose-invert">
+    <div class="flex items-center gap-4 mb-10 text-sm text-(--text-muted) animate-fade-in-up-delay-1">
+      <span class="font-mono">{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+      {post.tags && post.tags.length > 0 && (
+        <>
+          <span class="text-(--accent)">·</span>
+          <span>{post.tags.join(', ')}</span>
+        </>
+      )}
+    </div>
+
+    <div class="border-t border-(--border) pt-10 prose prose-invert prose-lg max-w-none animate-fade-in-up-delay-2
+      prose-headings:font-display prose-headings:text-(--text-primary)
+      prose-p:text-(--text-secondary) prose-p:leading-[1.8]
+      prose-a:text-(--accent) prose-a:no-underline hover:prose-a:underline
+      prose-strong:text-(--text-primary)
+      prose-code:text-(--accent) prose-code:bg-(--surface-raised) prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+      prose-blockquote:border-(--accent) prose-blockquote:text-(--text-secondary)
+      prose-li:text-(--text-secondary)
+    ">
       <PortableText value={post.body} />
     </div>
   </article>

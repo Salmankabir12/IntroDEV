@@ -2,40 +2,64 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Contact">
-  <section class="py-16 flex justify-center">
-    <div class="w-full max-w-xl p-8 bg-(--surface-elevated) border border-(--border) rounded-xl">
-      <h1 class="text-3xl font-semibold mb-6">Contact Me</h1>
+  <section class="max-w-3xl mx-auto px-6 md:px-10 py-20">
+    <div class="flex items-center gap-4 mb-2">
+      <span class="text-xs uppercase tracking-[0.2em] text-(--text-muted)">Connect</span>
+      <div class="flex-1 h-px bg-(--border)"></div>
+    </div>
+    <h1 class="font-display text-5xl md:text-6xl text-(--text-primary) mb-4 animate-fade-in-up">Let's work<br /><em class="italic">together</em></h1>
+    <p class="text-(--text-muted) mb-12 animate-fade-in-up-delay-1">Have a project in mind? I'd love to hear about it.</p>
 
-      <form id="contact-form" class="space-y-4">
+    <form id="contact-form" class="space-y-8 animate-fade-in-up-delay-2">
+      <div class="group">
+        <label class="block text-xs uppercase tracking-[0.2em] text-(--text-muted) mb-2 group-focus-within:text-(--accent) transition-colors duration-300">Name</label>
         <input
           type="text"
           name="name"
-          placeholder="Name"
           required
-          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-(--text-muted)"
+          class="w-full py-3 bg-transparent border-b border-(--border) focus:outline-none focus:border-(--accent) text-(--text-primary) placeholder-(--text-muted) transition-colors duration-300"
+          placeholder="Your name"
         />
+      </div>
+      <div class="group">
+        <label class="block text-xs uppercase tracking-[0.2em] text-(--text-muted) mb-2 group-focus-within:text-(--accent) transition-colors duration-300">Email</label>
         <input
           type="email"
           name="email"
-          placeholder="Email"
           required
-          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-(--text-muted)"
+          class="w-full py-3 bg-transparent border-b border-(--border) focus:outline-none focus:border-(--accent) text-(--text-primary) placeholder-(--text-muted) transition-colors duration-300"
+          placeholder="your@email.com"
         />
+      </div>
+      <div class="group">
+        <label class="block text-xs uppercase tracking-[0.2em] text-(--text-muted) mb-2 group-focus-within:text-(--accent) transition-colors duration-300">Message</label>
         <textarea
           name="message"
-          placeholder="Message"
           rows="5"
           required
-          class="w-full p-3 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-(--text-muted)"
+          class="w-full py-3 bg-transparent border-b border-(--border) focus:outline-none focus:border-(--accent) text-(--text-primary) placeholder-(--text-muted) transition-colors duration-300 resize-none"
+          placeholder="Tell me about your project..."
         ></textarea>
-        <button
-          type="submit"
-          class="w-full py-3 rounded-lg bg-gradient-to-r from-indigo-500 to-cyan-500 hover:opacity-90 transition"
-        >
-          Send Message
-        </button>
-        <p id="form-status" class="text-sm text-center"></p>
-      </form>
+      </div>
+      <button
+        type="submit"
+        class="group px-8 py-3 bg-(--accent) text-(--surface) text-sm uppercase tracking-[0.2em] hover:bg-(--accent-hover) transition-all duration-300 hover:scale-[1.02]"
+      >
+        Send Message <span class="inline-block group-hover:translate-x-1 transition-transform duration-300">→</span>
+      </button>
+      <p id="form-status" class="text-sm text-(--text-muted)"></p>
+    </form>
+
+    <div class="mt-16 border-t border-(--border) pt-8 animate-fade-in-up-delay-3">
+      <p class="text-sm text-(--text-muted)">Or reach out directly</p>
+      <div class="mt-3 flex gap-6">
+        <a href="https://github.com/Salmankabir12" target="_blank" class="group text-sm text-(--accent) hover:text-(--accent-hover) transition-colors duration-300">
+          GitHub <span class="inline-block group-hover:translate-x-1 transition-transform duration-300">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/salmaaaankabir" target="_blank" class="group text-sm text-(--accent) hover:text-(--accent-hover) transition-colors duration-300">
+          LinkedIn <span class="inline-block group-hover:translate-x-1 transition-transform duration-300">→</span>
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -59,10 +83,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       const data = await res.json();
 
       if (res.ok) {
-        status.textContent = 'Message sent successfully!';
+        status.textContent = 'Message sent successfully.';
         form.reset();
       } else {
-        status.textContent = data.error || 'Something went wrong';
+        status.textContent = data.error || 'Something went wrong.';
       }
     } catch (err) {
       status.textContent = 'Network error. Try again.';

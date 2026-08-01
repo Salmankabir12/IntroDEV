@@ -30,46 +30,46 @@ export default function StudentPredictor() {
     }
   }
 
-  const inputClass = "w-full p-2.5 rounded-lg bg-(--surface-raised) border border-(--border) focus:outline-none focus:ring-2 focus:ring-indigo-500 text-(--text-primary)"
+  const inputClass = "w-full py-2.5 bg-transparent border-b border-(--border) focus:outline-none focus:border-(--accent) text-(--text-primary) transition-colors duration-300"
 
   return (
-    <div class="border border-(--border) bg-(--surface-elevated) rounded-xl p-6">
-      <h2 class="text-xl font-semibold mb-1">Try it live</h2>
-      <p class="text-sm text-(--text-muted) mb-5">
+    <div>
+      <h2 className="font-display text-3xl text-(--text-primary) mb-1">Try it live</h2>
+      <p className="text-sm text-(--text-muted) mb-8">
         Enter student data to predict final exam marks.
       </p>
 
-      <form onSubmit={handleSubmit} class="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label class="block text-sm font-medium mb-1">Hours Studied (per week)</label>
-          <input type="number" value={hours} onChange={e => setHours(Number(e.target.value))} min={0} max={24} step={0.5} class={inputClass} />
+          <label className="block text-xs uppercase tracking-[0.2em] text-(--text-muted) mb-2">Hours Studied (per week)</label>
+          <input type="number" value={hours} onChange={e => setHours(Number(e.target.value))} min={0} max={24} step={0.5} className={inputClass} />
         </div>
         <div>
-          <label class="block text-sm font-medium mb-1">Attendance (%)</label>
-          <input type="number" value={attendance} onChange={e => setAttendance(Number(e.target.value))} min={0} max={100} step={1} class={inputClass} />
+          <label className="block text-xs uppercase tracking-[0.2em] text-(--text-muted) mb-2">Attendance (%)</label>
+          <input type="number" value={attendance} onChange={e => setAttendance(Number(e.target.value))} min={0} max={100} step={1} className={inputClass} />
         </div>
         <div>
-          <label class="block text-sm font-medium mb-1">Previous Exam Marks</label>
-          <input type="number" value={prevMarks} onChange={e => setPrevMarks(Number(e.target.value))} min={0} max={100} step={0.5} class={inputClass} />
+          <label className="block text-xs uppercase tracking-[0.2em] text-(--text-muted) mb-2">Previous Exam Marks</label>
+          <input type="number" value={prevMarks} onChange={e => setPrevMarks(Number(e.target.value))} min={0} max={100} step={0.5} className={inputClass} />
         </div>
 
         <button type="submit" disabled={loading}
-          class="w-full py-2.5 rounded-lg bg-gradient-to-r from-indigo-500 to-cyan-500 hover:opacity-90 font-medium disabled:opacity-50 transition">
+          className="px-8 py-3 bg-(--accent) text-(--surface) text-sm uppercase tracking-[0.2em] hover:bg-(--accent-hover) disabled:opacity-50 transition-colors duration-300">
           {loading ? 'Predicting...' : 'Predict Marks'}
         </button>
       </form>
 
       {result !== null && (
-        <div class="mt-5 p-4 bg-(--surface-raised) rounded-lg text-center">
-          <p class="text-sm text-(--text-muted) mb-1">Predicted Final Marks</p>
-          <p class="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+        <div className="mt-8 pt-8 border-t border-(--border) text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-(--text-muted) mb-2">Predicted Final Marks</p>
+          <p className="font-display text-5xl text-(--accent)">
             {result}
           </p>
         </div>
       )}
 
       {error && (
-        <p class="mt-3 text-sm text-red-400">{error}</p>
+        <p className="mt-4 text-sm text-red-400">{error}</p>
       )}
     </div>
   )

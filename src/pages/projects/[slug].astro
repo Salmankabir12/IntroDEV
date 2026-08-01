@@ -4,6 +4,7 @@ import StudentPredictor from '../../components/StudentPredictor';
 import { projects } from '../../data/projects';
 
 const project = projects.find(p => p.slug === Astro.params.slug)
+const index = projects.findIndex(p => p.slug === Astro.params.slug)
 
 if (!project) {
   return Astro.redirect('/projects', 404)
@@ -11,32 +12,42 @@ if (!project) {
 ---
 
 <BaseLayout title={project.title}>
-  <article class="py-16 max-w-3xl mx-auto">
-    <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+  <article class="max-w-4xl mx-auto px-6 md:px-10 py-20">
+    <div class="flex items-center justify-between mb-8">
+      <a href="/projects" class="group inline-flex items-center text-xs uppercase tracking-[0.2em] text-(--text-muted) hover:text-(--accent) transition-colors duration-300">
+        <span class="inline-block group-hover:-translate-x-1 transition-transform duration-300">←</span>
+        <span class="ml-2">Projects</span>
+      </a>
+      <span class="text-xs font-mono text-(--text-muted)">{String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</span>
+    </div>
+
+    <h1 class="font-display text-5xl md:text-6xl text-(--text-primary) mt-8 mb-4 animate-fade-in-up">
       {project.title}
     </h1>
 
-    <div class="flex flex-wrap gap-2 mb-4">
-      {project.techStack.map(t => (
-        <span class="px-3 py-1 text-sm bg-(--tag) text-(--tag-text) rounded-full">{t}</span>
-      ))}
-    </div>
+    <p class="text-sm text-(--text-secondary) mb-10 animate-fade-in-up-delay-1">{project.techStack.join(' · ')}</p>
 
-    <div class="flex flex-wrap gap-3 mb-8">
+    <div class="flex flex-wrap gap-8 mb-10 animate-fade-in-up-delay-2">
       {project.liveUrl && (
-        <a href={project.liveUrl} target="_blank" class="px-4 py-2 text-sm rounded-lg bg-gradient-to-r from-indigo-500 to-cyan-500 hover:opacity-90 transition font-medium">
-          View Live →
+        <a href={project.liveUrl} target="_blank" class="group text-sm text-(--accent) hover:text-(--accent-hover) transition-colors duration-300">
+          View Live <span class="inline-block group-hover:translate-x-1 transition-transform duration-300">→</span>
         </a>
       )}
       {project.githubUrl && (
-        <a href={project.githubUrl} target="_blank" class="px-4 py-2 text-sm rounded-lg border border-(--border) hover:bg-(--surface-raised) transition font-medium">
-          View on GitHub →
+        <a href={project.githubUrl} target="_blank" class="group text-sm text-(--text-secondary) hover:text-(--accent) transition-colors duration-300">
+          GitHub <span class="text-(--text-muted)">↗</span>
         </a>
       )}
     </div>
 
-    <p class="text-(--text-secondary) leading-relaxed mb-10">{project.content}</p>
+    <div class="border-t border-(--border) pt-10 animate-fade-in-up-delay-2">
+      <p class="text-(--text-secondary) leading-[1.8] text-lg">{project.content}</p>
+    </div>
 
-    {project.slug === 'ai-student-predictor' && <StudentPredictor client:load />}
+    {project.slug === 'ai-student-predictor' && (
+      <div class="mt-12 border-t border-(--border) pt-10">
+        <StudentPredictor client:load />
+      </div>
+    )}
   </article>
 </BaseLayout>

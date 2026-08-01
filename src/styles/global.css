@@ -1,27 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Gloock&family=Instrument+Serif:ital@0;1&display=swap');
 @import "tailwindcss";
 
 @layer base {
   :root {
-    --surface: #f8fafc;
-    --surface-elevated: #ffffff;
-    --surface-raised: #f1f5f9;
-    --border: #e2e8f0;
-    --text-primary: #0f172a;
-    --text-secondary: #334155;
-    --text-muted: #64748b;
-    --tag: #e2e8f0;
-    --tag-text: #334155;
+    --surface: #0a0a0a;
+    --surface-elevated: #161616;
+    --surface-raised: #212121;
+    --border: #333333;
+    --text-primary: #ffffff;
+    --text-secondary: #c9c9c9;
+    --text-muted: #8b8b8b;
+    --tag: #212121;
+    --tag-text: #d4d4d4;
+    --accent: #e8b65a;
+    --accent-hover: #f4c56e;
   }
 
-  .dark {
-    --surface: #030712;
-    --surface-elevated: #111827;
-    --surface-raised: #1f2937;
-    --border: #1f2937;
-    --text-primary: #f1f5f9;
-    --text-secondary: #cbd5e1;
-    --text-muted: #6b7280;
-    --tag: #374151;
-    --tag-text: #cbd5e1;
+  .light {
+    --surface: #fafafa;
+    --surface-elevated: #ffffff;
+    --surface-raised: #f0f0f0;
+    --border: #d4d4d4;
+    --text-primary: #0d0d0d;
+    --text-secondary: #333333;
+    --text-muted: #555555;
+    --tag: #f0f0f0;
+    --tag-text: #333333;
+    --accent: #7d5f1a;
+    --accent-hover: #664b14;
+  }
+
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--text-primary);
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--surface);
+  }
+
+  .font-display {
+    font-family: 'Gloock', Georgia, serif;
+  }
+
+  .font-accent {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .slide-in-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .slide-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+
+  @keyframes pulse-accent {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .animate-pulse-accent {
+    animation: pulse-accent 2s ease-in-out infinite;
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 1s ease-out forwards;
+  }
+
+  .animate-fade-in-up-delay-1 {
+    animation: fade-in-up 1s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-up-delay-2 {
+    animation: fade-in-up 1s ease-out 0.4s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-up-delay-3 {
+    animation: fade-in-up 1s ease-out 0.6s forwards;
+    opacity: 0;
   }
 }

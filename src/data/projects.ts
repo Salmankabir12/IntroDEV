@@ -79,5 +79,13 @@ export const projects = [
     liveUrl: "https://studyai-bb2.pages.dev",
     githubUrl: "https://github.com/Salmankabir12/StudyAI",
     content: "An AI-powered study platform built with Astro on Cloudflare Pages. Features server-side rendering with Cloudflare D1 for database storage and Workers AI for intelligent study assistance. Built with React components, Tailwind CSS, and the Astro framework."
+  },
+  {
+    slug: "academix",
+    title: "Academix",
+    description: "Semester course manager with Canvas LMS sync, NSU RDS grade import, automated attendance tracking, and GPA calculation.",
+    techStack: ["PHP", "MySQL", "Canvas API", "OAuth 2.0", "JavaScript"],
+    githubUrl: "https://github.com/Salmankabir12/academix",
+    content: "A personal semester course manager built with PHP and MySQL. Features include Canvas LMS integration with OAuth 2.0 and direct token support for importing courses and assignments, NSU RDS integration for pulling completed course grades, automated attendance tracking from course schedules, letter grade support with direct GPA mapping, and a Strapi-inspired light theme. Runs locally with Laravel Herd."
   }
 ];
