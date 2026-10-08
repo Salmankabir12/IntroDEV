@@ -2,7 +2,7 @@
 
 Personal portfolio site built with [Astro](https://astro.build), deployed on [Cloudflare Pages](https://pages.cloudflare.com).
 
-**Live site:** https://portfolio-22m.pages.dev
+**Live site:** https://salmankabir.pages.dev
 
 ## Design
 
@@ -46,7 +46,7 @@ FROM_EMAIL=contact@yourdomain.com
 
 ```bash
 npm run build
-npx wrangler pages deploy dist --project-name=portfolio
+npx wrangler pages deploy dist --project-name=salmankabir
 ```
 
 ## Studio
